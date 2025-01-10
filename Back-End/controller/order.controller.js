@@ -129,7 +129,7 @@ import { sendMail } from "../services/emailService.js";const orderConfirmationTe
     
 // Create a new order
 export const createOrder = async (req, res) => {
-  console.log("Test route hit!");
+  //("Test route hit!");
 
   try {
     const { user, products, totalAmount, address } = req.body;

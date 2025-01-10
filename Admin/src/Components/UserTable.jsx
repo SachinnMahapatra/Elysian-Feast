@@ -65,7 +65,7 @@ const UserTable = () => {
         },
       });
 
-      console.log('User deleted successfully', response.data);
+      //('User deleted successfully', response.data);
       setUsers(users.filter((user) => user._id !== userId));
     } catch (error) {
       console.error('Error deleting user:', error);

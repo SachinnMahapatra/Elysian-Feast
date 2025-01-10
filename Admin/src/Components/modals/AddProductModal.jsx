@@ -23,7 +23,7 @@ const AddProductModal = ({ isOpen, onClose, onSave }) => {
   };
 
   const handleSubmit = async () => {
-    console.log(image);  // Check if the image is set correctly
+    //(image);  // Check if the image is set correctly
   
     const { name, price, originalPrice, description, category, quantity } = formData;
   

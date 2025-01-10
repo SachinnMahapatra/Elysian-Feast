@@ -9,14 +9,14 @@ function Monsoon() {   const [products, setProducts] = useState([]);
     const getProducts = async () => {
       try {
         const res = await axios.get("https://shine-on-back-end.onrender.com/api/products/all");
-        console.log("API Response:", res.data); // Check the full response structure
+        //("API Response:", res.data); // Check the full response structure
         if (res.data && Array.isArray(res.data.products)) {
           setProducts(res.data.products);
         } else {
           console.error("Unexpected API response format:", res.data);
         }
       } catch (error) {
-        console.log(error);
+        //(error);
       }
     };
     getProducts();

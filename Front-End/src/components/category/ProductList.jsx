@@ -16,7 +16,7 @@ const ProductList = ({ products }) => {
           product.category &&
           product.category.toLowerCase().trim() === selectedCategory.toLowerCase().trim() // Normalize and trim
       );
-      console.log('Filtered Products:', filtered); // Log filtered products for debugging
+      //('Filtered Products:', filtered); // Log filtered products for debugging
       setFilteredProducts(filtered);
     }
   }, [selectedCategory, products]);

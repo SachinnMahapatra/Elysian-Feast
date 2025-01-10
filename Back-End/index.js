@@ -61,10 +61,10 @@ try{
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    console.log("Connected to MongoDB");
+    //("Connected to MongoDB");
 }
 catch(error){ 
-    console.log("Error connecting",error)
+    //("Error connecting",error)
 }
 
 // Define __dirname
@@ -85,5 +85,5 @@ app.use("/order", orderRoute); // Prefix for all order-related routes
 
 
 app.listen(port, ()=> {
-    console.log(`Server is running on port ${port}`);
+    //(`Server is running on port ${port}`);
 });

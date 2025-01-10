@@ -23,7 +23,7 @@ function Contact() {
     }).then((res) => res.json());
 
     if (res.success) {
-      console.log("Success", res);
+      //("Success", res);
       toast.success('Request sent');
       
     }

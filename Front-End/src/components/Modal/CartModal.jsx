@@ -114,7 +114,7 @@ const CartModal = ({ isOpen, onClose }) => {
     setActionLoading(true); // Set loading state to true
 
     try {
-      console.log("Removing item:", { userId, productId });
+      //("Removing item:", { userId, productId });
 
       const response = await axios.post(
         "http://localhost:4001/cart/remove",

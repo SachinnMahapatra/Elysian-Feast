@@ -43,7 +43,7 @@ export const createProduct = async (req, res) => {
       highlights, 
       imageUrl 
     } = req.body;
-    // console.log(req.file); // Check the file being received
+    // //(req.file); // Check the file being received
     // Ensure required fields are provided
     if (!name || !price || !description || !category || !quantity) {
       return res.status(400).json({ success: false, message: "All required fields must be provided" });

@@ -113,7 +113,7 @@ const Checkout = () => {
         }
       );
       // toast.success("Order placed successfully! Check your email for details.");
-      console.log("Order Response:", response.data);
+      //("Order Response:", response.data);
       navigate("/Order-Confirmation");
       // iff checkout is successfull
    

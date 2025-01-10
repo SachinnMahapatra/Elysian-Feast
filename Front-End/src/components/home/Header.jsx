@@ -51,7 +51,7 @@ function Header() {
       }
   
       const cartData = await response.json();
-      console.log('Cart Data:', cartData); // Add this log to see the response structure
+      //('Cart Data:', cartData); // Add this log to see the response structure
       
       // Let's try different possible structures
       const count = cartData.items?.length || 
@@ -59,7 +59,7 @@ function Header() {
                    cartData.length ||
                    0;
       
-      console.log('Cart Count:', count); // Add this log to see the calculated count
+      //('Cart Count:', count); // Add this log to see the calculated count
       setCartCount(count);
     } catch (error) {
       console.error('Error fetching cart:', error);

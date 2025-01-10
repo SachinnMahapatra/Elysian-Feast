@@ -79,7 +79,7 @@ export const updateCart = async (req, res) => {
 export const removeFromCart = async (req, res) => {
   try {
     const { userId, productId } = req.body;
-    console.log("Request Body:", req.body);
+    //("Request Body:", req.body);
 
     if (!userId || !productId) {
       return res.status(400).json({ success: false, message: "Missing userId or productId" });

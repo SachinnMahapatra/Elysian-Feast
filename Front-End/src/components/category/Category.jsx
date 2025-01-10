@@ -18,7 +18,7 @@ const Category = () => {
       try {
         const response = await fetch(API_LINK);
         const data = await response.json();
-        console.log('API Response:', data); // Debug log
+        //('API Response:', data); // Debug log
         setProducts(data.products || []); // Adjust based on response structure
       } catch (error) {
         setError(error.message);

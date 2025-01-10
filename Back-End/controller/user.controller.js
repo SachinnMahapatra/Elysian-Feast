@@ -206,10 +206,10 @@ const validateEmail = async (email) => {
 
     // Handle the response based on the status of the email
     if (response.data.state === "deliverable") {
-      console.log("Valid email address:", email);
+      //("Valid email address:", email);
       return true;
     } else {
-      console.log("Invalid email address:", response.data.reason || "Unknown reason");
+      //("Invalid email address:", response.data.reason || "Unknown reason");
       return false;
     }
   } catch (error) {
@@ -244,8 +244,8 @@ export const signup = async (req, res) => {
     // Generate a verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
     const verificationTokenExpiresAt = Date.now() + 3600000; // Token valid for 1 hour
-    console.log("Token expiration time:", verificationTokenExpiresAt);
-    console.log("Token expires at:", new Date(verificationTokenExpiresAt).toLocaleString());
+    //("Token expiration time:", verificationTokenExpiresAt);
+    //("Token expires at:", new Date(verificationTokenExpiresAt).toLocaleString());
 
     const createdUser = new User({
       firstName,
@@ -278,7 +278,7 @@ export const signup = async (req, res) => {
       message: "User created successfully. Please verify your email to activate your account.",
     });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -286,7 +286,7 @@ export const signup = async (req, res) => {
 
 // verify the email
 export const verifyEmail = async (req, res) => {
-  console.log("reached")
+  //("reached")
   try {
     const { token } = req.params; // Use `params` to access the token
 
@@ -295,8 +295,8 @@ export const verifyEmail = async (req, res) => {
       verificationTokenExpiresAt: { $gt: Date.now() },
     });
 
-    console.log("Current time:", Date.now());
-    console.log("Token expires at:", user ? user.verificationTokenExpiresAt : "User not found");
+    //("Current time:", Date.now());
+    //("Token expires at:", user ? user.verificationTokenExpiresAt : "User not found");
 
     if (!user) {
       return res.status(400).json({ message: "Verification failed. Token invalid or expired." });
@@ -362,7 +362,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -377,7 +377,7 @@ export const getUserCount = async (req, res) => {
       count,
     });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -403,7 +403,7 @@ export const updateUser = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -417,7 +417,7 @@ export const getAllUsers = async (req, res) => {
       users,
     });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -426,8 +426,8 @@ export const getAllUsers = async (req, res) => {
 // Delete User (protected)
 export const deleteUser = async (req, res) => {
   try {
-    console.log("Received delete request for user ID:", req.params.id);
-    console.log("Token from header:", req.header("Authorization")); // Log the token
+    //("Received delete request for user ID:", req.params.id);
+    //("Token from header:", req.header("Authorization")); // Log the token
 
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
@@ -438,7 +438,7 @@ export const deleteUser = async (req, res) => {
       message: "User deleted successfully",
     });
   } catch (error) {
-    console.log("Error in deleteUser controller:", error.message);
+    //("Error in deleteUser controller:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -472,7 +472,7 @@ export const requestPasswordReset = async (req, res) => {
 
     res.status(200).json({ message: "Password reset link sent to your email" });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -499,7 +499,7 @@ export const resetPassword = async (req, res) => {
 
     res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
-    console.log("Error: " + error.message);
+    //("Error: " + error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -24,7 +24,7 @@ const TableBooking = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Table Booking Details:", formData);
+    //("Table Booking Details:", formData);
     toast.success("Your table has been successfully booked!");
 
     // Reset form data
