@@ -6,14 +6,14 @@
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: linear-gradient(180deg, #f0f8ff, #d3eafc); /* Adjust gradient color */
+    background: linear-gradient(180deg, #d2e26a, #d3eafc); /* Adjust gradient color */
     border-radius: 10px;
   }
   
   /* Handle (thumb) */
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: linear-gradient(180deg, #2578ff, #7fd5fe); /* Initial color 
+    background: linear-gradient(180deg, #cbda6e, #e59e5c); /* Initial color 
     animation: scrollBarGradient 2s linear infinite; /* Animation applied */
   }
   

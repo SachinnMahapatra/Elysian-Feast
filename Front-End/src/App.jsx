@@ -14,6 +14,7 @@ import VerifyEmail from "./components/VerifyEmail";
 import Checkout from "./components/Checkout";
 import ProductDetails from "./components/ProductDetails";
 import Category from "./components/category/Category";
+import OrderConfirmation from "./components/OrderConfirmation";
 
 export default function App() {
   return (
@@ -31,6 +32,8 @@ export default function App() {
     <Route path="/checkout/:userId" element={<Checkout />} />
     <Route path="/product/:productId" element={<ProductDetails />} />
     <Route path="/category" element={<Category />} />
+    <Route path="/Order-Confirmation" element={<OrderConfirmation />} />
+
     {/* <Route path="/products" element={<Monsoon />}/> */}
     </Routes>
     <Toaster/>
