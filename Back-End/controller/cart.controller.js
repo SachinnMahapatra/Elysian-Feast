@@ -79,18 +79,39 @@ export const updateCart = async (req, res) => {
 export const removeFromCart = async (req, res) => {
   try {
     const { userId, productId } = req.body;
+    console.log("Request Body:", req.body);
+
+    if (!userId || !productId) {
+      return res.status(400).json({ success: false, message: "Missing userId or productId" });
+    }
 
     const cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
-      return res.status(404).json({ success: false, message: 'Cart not found' });
+      return res.status(404).json({ success: false, message: "Cart not found" });
     }
 
-    cart.items = cart.items.filter((item) => item.product.toString() !== productId);
+    const updatedItems = cart.items.filter((item) => item.product.toString() !== productId);
+
+    if (updatedItems.length === cart.items.length) {
+      return res.status(404).json({ success: false, message: "Product not found in cart" });
+    }
+
+    cart.items = updatedItems;
     await cart.save();
 
-    res.status(200).json({ success: true, message: 'Product removed from cart', cart });
+    res.status(200).json({
+      success: true,
+      message: "Product removed from cart successfully",
+      cart,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Failed to remove product from cart', error: error.message });
+    console.error("Error in removeFromCart:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to remove product from cart",
+      error: error.message,
+    });
   }
 };
+

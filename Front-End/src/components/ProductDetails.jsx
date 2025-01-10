@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Star, ShoppingBag } from 'lucide-react';
 import axios from 'axios';
 import Header from './home/Header';
+import toast from 'react-hot-toast';
 
 const ProudctDetails = () => {
   const { productId } = useParams();
@@ -47,7 +48,7 @@ const ProudctDetails = () => {
         }
       );
   
-      alert('Product added to cart successfully!');
+      toast.success('Product added to cart successfully!');
     } catch (err) {
       console.error('Error adding to cart:', err);
     }

@@ -12,9 +12,10 @@ const CartModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   // Get user token from localStorage
+
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
-  const userId = user ? JSON.parse(user)._id : null;  // Axios configuration
+  const userId = user ? JSON.parse(user)._id : null; // Axios configuration
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -25,20 +26,20 @@ const CartModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const fetchCart = async () => {
       if (!isOpen) return;
-  
+
       if (!userId) {
         setError("User not logged in");
         setLoading(false);
         return;
       }
-  
+
       try {
         setLoading(true);
         const response = await axios.get(
           `http://localhost:4001/cart/${userId}`,
           axiosConfig
         );
-  
+
         if (!response.data.cart) {
           setError("Cart not found");
         } else {
@@ -47,12 +48,15 @@ const CartModal = ({ isOpen, onClose }) => {
         }
       } catch (err) {
         setError("Failed to fetch cart items");
-        console.error("Error fetching cart:", err.response?.data || err.message);
+        console.error(
+          "Error fetching cart:",
+          err.response?.data || err.message
+        );
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchCart();
   }, [isOpen]);
 
@@ -63,12 +67,16 @@ const CartModal = ({ isOpen, onClose }) => {
     setActionLoading(true);
 
     // Save the current quantity for rollback if necessary
-    const previousQuantity = cartItems.find(item => item.product._id === productId)?.quantity;
+    const previousQuantity = cartItems.find(
+      (item) => item.product._id === productId
+    )?.quantity;
 
     try {
       // Optimistic Update
       const updatedItems = cartItems.map((item) =>
-        item.product._id === productId ? { ...item, quantity: newQuantity } : item
+        item.product._id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
       );
       setCartItems(updatedItems);
 
@@ -79,9 +87,11 @@ const CartModal = ({ isOpen, onClose }) => {
       );
     } catch (err) {
       // Revert the optimistic update in case of error
-      setCartItems(previousState => {
-        return previousState.map(item =>
-          item.product._id === productId ? { ...item, quantity: previousQuantity } : item
+      setCartItems((previousState) => {
+        return previousState.map((item) =>
+          item.product._id === productId
+            ? { ...item, quantity: previousQuantity }
+            : item
         );
       });
       setError("Failed to update quantity");
@@ -92,22 +102,42 @@ const CartModal = ({ isOpen, onClose }) => {
   };
 
   // Remove item from cart
-  const removeItem = async (productId) => {
-    if (actionLoading) return;
 
-    setActionLoading(true);
+  const removeItem = async (productId) => {
+    if (!userId || !productId || actionLoading) {
+      console.error(
+        "Missing userId or productId or action already in progress"
+      );
+      return;
+    }
+
+    setActionLoading(true); // Set loading state to true
 
     try {
-      // Optimistic Update
-      const remainingItems = cartItems.filter((item) => item.product._id !== productId);
-      setCartItems(remainingItems);
+      console.log("Removing item:", { userId, productId });
 
-      await axios.delete(`http://localhost:4001/cart/${productId}`, axiosConfig);
+      const response = await axios.post(
+        "http://localhost:4001/cart/remove",
+        { userId, productId },
+        axiosConfig
+      );
+
+      if (response.data.success) {
+        const updatedCartResponse = await axios.get(
+          `http://localhost:4001/cart/${userId}`,
+          axiosConfig
+        );
+        setCartItems(updatedCartResponse.data.cart.items); // Update the cart items
+      } else {
+        console.error("Failed to remove product:", response.data.message);
+      }
     } catch (err) {
-      setError("Failed to remove item");
-      console.error("Error removing item:", err);
+      console.error(
+        "Error removing product:",
+        err.response?.data || err.message
+      );
     } finally {
-      setActionLoading(false);
+      setActionLoading(false); // Reset loading state
     }
   };
 
@@ -123,7 +153,7 @@ const CartModal = ({ isOpen, onClose }) => {
   const handleCheckout = () => {
     if (!token) {
       alert("Please log in first.");
-      navigate("/login");  // redirect to login page if not logged in
+      navigate("/login"); // redirect to login page if not logged in
     } else {
       navigate(`/checkout/${userId}`);
     }
@@ -139,7 +169,9 @@ const CartModal = ({ isOpen, onClose }) => {
         <div className="h-full bg-white shadow-xl flex flex-col">
           {/* Header */}
           <div className="px-6 py-4 border-b flex justify-between items-center bg-gray-50">
-            <h2 className="text-xl font-semibold text-gray-900">Shopping Cart</h2>
+            <h2 className="text-xl font-semibold text-gray-900">
+              Shopping Cart
+            </h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-500"
@@ -168,7 +200,7 @@ const CartModal = ({ isOpen, onClose }) => {
                   className="mt-4 text-indigo-600 underline"
                   onClick={() => {
                     onClose();
-                    navigate("/products");
+                    navigate("/category");
                   }}
                 >
                   Start Shopping
@@ -177,19 +209,27 @@ const CartModal = ({ isOpen, onClose }) => {
             ) : (
               <div className="space-y-6">
                 {cartItems.map((item) => (
-                  <div key={item.product._id} className="flex items-center space-x-4">
+                  <div
+                    key={item.product._id}
+                    className="flex items-center space-x-4"
+                  >
                     <img
                       src={item.product.imageUrl}
                       alt={item.product.name}
                       className="w-20 h-20 object-cover rounded"
                     />
                     <div className="flex-1">
-                      <h3 className="text-gray-900 font-medium">{item.product.name}</h3>
+                      <h3 className="text-gray-900 font-medium">
+                        {item.product.name}
+                      </h3>
                       <p className="text-gray-600">₹{item.product.price}</p>
                       <div className="flex items-center space-x-2 mt-2 text-black">
                         <button
                           onClick={() =>
-                            updateQuantity(item.product._id, Math.max(1, item.quantity - 1))
+                            updateQuantity(
+                              item.product._id,
+                              Math.max(1, item.quantity - 1)
+                            )
                           }
                           className="p-1 rounded-full hover:bg-gray-100"
                           aria-label="Decrease quantity"
@@ -208,10 +248,12 @@ const CartModal = ({ isOpen, onClose }) => {
                         </button>
                         <button
                           onClick={() => removeItem(item.product._id)}
-                          className="ml-4 text-red-500 hover:text-red-600 text-sm"
-                          aria-label="Remove item"
+                          className={`ml-4 text-red-500 hover:text-red-600 text-sm ${
+                            actionLoading ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                          disabled={actionLoading}
                         >
-                          Remove
+                          {actionLoading ? "Removing..." : "Remove"}
                         </button>
                       </div>
                     </div>
