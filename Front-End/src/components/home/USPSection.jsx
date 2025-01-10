@@ -26,7 +26,7 @@ function USPSection() {
 
         {/* Knife Image */}
         <div className="flex-shrink-0 my-8 md:my-0">
-          <img src="/src/assets/usp.jpg" alt="Knife" className="h-48 md:h-96 w-auto object-contain mx-auto rounded-lg shadow-lg" />
+          <img src="usp.jpg" alt="Knife" className="h-48 md:h-96 w-auto object-contain mx-auto rounded-lg shadow-lg" />
         </div>
 
         {/* About Food section */}

@@ -43,7 +43,7 @@ const SpecialSection = () => {
           </h1>
           <div className="mb-5 flex justify-center">
             <img
-              src="src/assets/Heroimg.png"
+              src="Heroimg.png"
               alt="Today's Special Cake"
               className="w-40 lg:w-64 rounded-lg shadow-lg object-cover transition-transform duration-300 ease-in-out"
             />

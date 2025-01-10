@@ -14,7 +14,7 @@ function GallerySection() {
           {/* Image Card 1 */}
           <div className="relative group">
             <img
-              src="src/assets/Heroimg.png"
+              src="Heroimg.png"
               alt="Dish 1"
               className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
             />
@@ -26,7 +26,7 @@ function GallerySection() {
           {/* Image Card 2 */}
           <div className="relative group">
             <img
-              src="src/assets/Heroimg.png"
+              src="Heroimg.png"
               alt="Dish 2"
               className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
             />
@@ -38,7 +38,7 @@ function GallerySection() {
           {/* Image Card 3 */}
           <div className="relative group">
             <img
-              src="src/assets/Heroimg.png"
+              src="Heroimg.png"
               alt="Dish 3"
               className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
             />

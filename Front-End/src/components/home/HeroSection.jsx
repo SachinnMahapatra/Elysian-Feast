@@ -28,7 +28,7 @@ function HeroSection() {
       <div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
         <img
           className="w-3/5 md:w-3/5 rounded-lg shadow-[7px_7px_22px_#8b8b8b,-7px_-7px_22px_#ffffff] hover:scale-105 transition-transform duration-300"
-          src="src/assets/mainimage.webp"
+          src="mainimage.webp"
           alt="Gourmet Dish"
         />
       </div>
