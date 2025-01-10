@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaShoppingCart, FaUserCircle } from "react-icons/fa"; // User Icon
+import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CartModal from "../Modal/CartModal";
 
@@ -9,6 +9,7 @@ function Header() {
   const [userName, setUserName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -17,10 +18,54 @@ function Header() {
     if (user) {
       setIsAuthenticated(true);
       setUserName(user.firstName || "User");
+      fetchCartCount(user._id); // Fetch cart count when user is authenticated
     } else {
       setIsAuthenticated(false);
+      setCartCount(0);
     }
   }, []);
+
+  const fetchCartCount = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+  
+      const response = await fetch(`http://localhost:4001/cart/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          setIsAuthenticated(false);
+          window.location.href = '/login';
+          return;
+        }
+        throw new Error('Failed to fetch cart');
+      }
+  
+      const cartData = await response.json();
+      console.log('Cart Data:', cartData); // Add this log to see the response structure
+      
+      // Let's try different possible structures
+      const count = cartData.items?.length || 
+                   cartData.cart?.items?.length || 
+                   cartData.length ||
+                   0;
+      
+      console.log('Cart Count:', count); // Add this log to see the calculated count
+      setCartCount(count);
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      setCartCount(0);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -38,9 +83,26 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token"); // Also remove the token
     setIsAuthenticated(false);
+    setCartCount(0);
     window.location.href = "/";
   };
+
+  // Cart icon component to avoid repetition
+  const CartIcon = () => (
+    <button
+      onClick={() => setIsCartOpen(true)}
+      className="relative hover:text-[#D16A48] transition-all"
+    >
+      <FaShoppingCart className="text-2xl" />
+      {cartCount > 0 && (
+        <span className="absolute -top-2 -right-2 bg-[#D16A48] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+          {cartCount}
+        </span>
+      )}
+    </button>
+  );
 
   return (
     <>
@@ -70,15 +132,7 @@ function Header() {
           {/* Auth Section for Desktop */}
           <div className="hidden md:flex items-center space-x-6">
             {/* Cart Icon */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative hover:text-[#D16A48] transition-all"
-            >
-              <FaShoppingCart className="text-2xl" />
-              <span className="absolute -top-2 -right-2 bg-[#D16A48] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                1
-              </span>
-            </button>
+            <CartIcon />
 
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
@@ -128,15 +182,7 @@ function Header() {
 
           {/* Hamburger Menu for Mobile */}
           <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative hover:text-[#D16A48] transition-all"
-            >
-              <FaShoppingCart className="text-2xl" />
-              <span className="absolute -top-2 -right-2 bg-[#D16A48] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                1
-              </span>
-            </button>
+            <CartIcon />
             <button
               className="text-[#7C6145] text-2xl focus:outline-none"
               onClick={() => setMenuOpen(!menuOpen)}
