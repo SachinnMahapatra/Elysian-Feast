@@ -262,7 +262,7 @@ export const signup = async (req, res) => {
     await createdUser.save();
 
     // Generate a verification link
-    const verificationLink = `http://localhost:5173/verify-email?token=${verificationToken}`;
+    const verificationLink = `https://elysianfeast.netlify.app/verify-email?token=${verificationToken}`;
     const htmlContent = emailTemplate(firstName, verificationLink);
 
     // Send the verification email
@@ -462,7 +462,7 @@ export const requestPasswordReset = async (req, res) => {
     await user.save();
 
     // Create the password reset link
-    const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
+    const resetLink = `https://elysianfeast.netlify.app/reset-password?token=${resetToken}`;
 
     // Send the reset token to the user's email using the sendMail function
     const resetmail = emailtemplatereset(resetLink)
