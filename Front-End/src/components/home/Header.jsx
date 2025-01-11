@@ -32,7 +32,7 @@ function Header() {
         throw new Error('No authentication token found');
       }
   
-      const response = await fetch(`http://localhost:4001/cart/${userId}`, {
+      const response = await fetch(`https://elysian-feast.onrender.com/cart/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

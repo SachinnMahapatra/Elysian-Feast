@@ -28,7 +28,7 @@ const ResetPasswordPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4001/user/reset-password', {
+      const response = await axios.post('https://elysian-feast.onrender.com/user/reset-password', {
         token,
         newPassword,
       });

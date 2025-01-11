@@ -53,7 +53,7 @@ const Checkout = () => {
       const fetchCartItems = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:4001/cart/${userId}`,
+            `https://elysian-feast.onrender.com/cart/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const Checkout = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/order/create",
+        "https://elysian-feast.onrender.com/order/create",
         orderData,
         {
           headers: {

@@ -15,14 +15,14 @@ const UserTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4001/user/all")
+      .get("https://elysian-feast.onrender.com/user/all")
       .then((res) => setUsers(res.data.users))
       .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
   const addUser = async (newUser) => {
     try {
-      const response = await axios.post("http://localhost:4001/user/create", newUser);
+      const response = await axios.post("https://elysian-feast.onrender.com/user/create", newUser);
       setUsers([...users, response.data.newUser]);
     } catch (error) {
       console.error("Error adding user:", error);
@@ -33,7 +33,7 @@ const UserTable = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:4001/user/update/${updatedUser._id}`,
+        `https://elysian-feast.onrender.com/user/update/${updatedUser._id}`,
         updatedUser,
         {
           headers: {
@@ -59,7 +59,7 @@ const UserTable = () => {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:4001/user/delete/${userId}`, {
+      const response = await axios.delete(`https://elysian-feast.onrender.com/user/delete/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

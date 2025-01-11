@@ -45,7 +45,7 @@ const AddProductModal = ({ isOpen, onClose, onSave }) => {
       });
       if (image) data.append("productImage", image);  // Check if this is getting appended
   
-      const response = await axios.post("http://localhost:4001/product/create", data, {
+      const response = await axios.post("https://elysian-feast.onrender.com/product/create", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

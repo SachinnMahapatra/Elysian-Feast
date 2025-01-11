@@ -17,7 +17,7 @@ const VerifyEmail = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:4001/user/verify-email/${token}`);
+        const response = await axios.get(`https://elysian-feast.onrender.com/user/verify-email/${token}`);
         if (response.status === 200) {
           setVerificationStatus("success");
           toast.success("Email verified successfully. You can now log in.");

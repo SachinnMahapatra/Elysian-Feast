@@ -23,7 +23,7 @@ function Signup() {
     };
   
     try {
-      const response = await axios.post("http://localhost:4001/user/signup", userInfo);
+      const response = await axios.post("https://elysian-feast.onrender.com/user/signup", userInfo);
   
       if (response.data.message === "User already exists") {
         toast.error("A user with this email already exists. Please log in.");

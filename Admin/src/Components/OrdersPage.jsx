@@ -42,7 +42,7 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4001/order/all", {
+      const response = await axios.get("https://elysian-feast.onrender.com/order/all", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setOrders(response.data.orders);
@@ -58,7 +58,7 @@ const OrdersPage = () => {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:4001/order/${orderId}/status`,
+        `https://elysian-feast.onrender.com/order/${orderId}/status`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

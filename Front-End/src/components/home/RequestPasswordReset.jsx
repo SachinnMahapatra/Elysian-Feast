@@ -10,7 +10,7 @@ function RequestPasswordReset() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4001/user/request-reset", { email });
+      await axios.post("https://elysian-feast.onrender.com/user/request-reset", { email });
       toast.success("Password reset link sent!");
       setTimeout(() => navigate("/"), 2000); // Redirect to the home page after 2 seconds
     } catch (error) {

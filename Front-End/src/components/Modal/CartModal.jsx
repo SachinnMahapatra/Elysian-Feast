@@ -36,7 +36,7 @@ const CartModal = ({ isOpen, onClose }) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:4001/cart/${userId}`,
+          `https://elysian-feast.onrender.com/cart/${userId}`,
           axiosConfig
         );
 
@@ -81,7 +81,7 @@ const CartModal = ({ isOpen, onClose }) => {
       setCartItems(updatedItems);
 
       await axios.put(
-        `http://localhost:4001/cart/${productId}`,
+        `https://elysian-feast.onrender.com/cart/${productId}`,
         { quantity: newQuantity },
         axiosConfig
       );
@@ -117,14 +117,14 @@ const CartModal = ({ isOpen, onClose }) => {
       //("Removing item:", { userId, productId });
 
       const response = await axios.post(
-        "http://localhost:4001/cart/remove",
+        "https://elysian-feast.onrender.com/cart/remove",
         { userId, productId },
         axiosConfig
       );
 
       if (response.data.success) {
         const updatedCartResponse = await axios.get(
-          `http://localhost:4001/cart/${userId}`,
+          `https://elysian-feast.onrender.com/cart/${userId}`,
           axiosConfig
         );
         setCartItems(updatedCartResponse.data.cart.items); // Update the cart items

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:4001/user"; // Replace with your API base URL
+const API_BASE_URL = "https://elysian-feast.onrender.com/user"; // Replace with your API base URL
 
 export const fetchAllUsers = async () => {
   const response = await axios.get(`${API_BASE_URL}/all`);

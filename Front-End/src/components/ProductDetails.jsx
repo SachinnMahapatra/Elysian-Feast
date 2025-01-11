@@ -18,7 +18,7 @@ const ProudctDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:4001/product/${productId}`);
+        const response = await axios.get(`https://elysian-feast.onrender.com/product/${productId}`);
         setProduct(response.data.product);
         setLoading(false);
       } catch (err) {
@@ -39,7 +39,7 @@ const ProudctDetails = () => {
       }
   
       const response = await axios.post(
-        'http://localhost:4001/cart',
+        'https://elysian-feast.onrender.com/cart',
         { productId: product._id, quantity },
         {
           headers: {

@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4001/product/all")
+      .get("https://elysian-feast.onrender.com/product/all")
       .then((res) => setProducts(res.data.products));
   }, []);
 
@@ -30,7 +30,7 @@ const Dashboard = () => {
   const updateProduct = async (updatedProduct) => {
     try {
       const response = await axios.put(
-        `http://localhost:4001/product/update/${updatedProduct._id}`,
+        `https://elysian-feast.onrender.com/product/update/${updatedProduct._id}`,
         updatedProduct
       );
       setProducts(
@@ -53,7 +53,7 @@ const Dashboard = () => {
   const deleteProduct = async () => {
     try {
       await axios.delete(
-        `http://localhost:4001/product/delete/${selectedProduct._id}`
+        `https://elysian-feast.onrender.com/product/delete/${selectedProduct._id}`
       );
       setProducts(
         products.filter((product) => product._id !== selectedProduct._id)

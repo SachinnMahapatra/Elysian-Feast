@@ -70,10 +70,10 @@ const AdminDashboard = () => {
 
         // Fetch all data
         const [userRes, productRes, orderCountRes, ordersRes] = await Promise.all([
-          fetch('http://localhost:4001/user/count', { headers }),
-          fetch('http://localhost:4001/product/count', { headers }),
-          fetch('http://localhost:4001/order/count', { headers }),
-          fetch('http://localhost:4001/order/all', { headers })
+          fetch('https://elysian-feast.onrender.com/user/count', { headers }),
+          fetch('https://elysian-feast.onrender.com/product/count', { headers }),
+          fetch('https://elysian-feast.onrender.com/order/count', { headers }),
+          fetch('https://elysian-feast.onrender.com/order/all', { headers })
         ]);
 
         // Parse responses

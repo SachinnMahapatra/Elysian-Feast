@@ -11,7 +11,7 @@ const Category = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_LINK = 'http://localhost:4001/product/all';
+  const API_LINK = 'https://elysian-feast.onrender.com/product/all';
 
   useEffect(() => {
     const fetchProducts = async () => {
