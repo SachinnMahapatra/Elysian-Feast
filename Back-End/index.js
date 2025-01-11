@@ -21,9 +21,10 @@ import cartRoute from './route/cart.route.js';
 
 const app = express()
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://elysianfeast.netlify.app/'],
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://elysianfeast.netlify.app'],
     credentials: true 
   }));
+  
 // app.use(express.json());
 
 app.use(bodyParser.json());
