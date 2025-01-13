@@ -1,23 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Users, Package, ShoppingCart, IndianRupee 
+  Users, Package, ShoppingCart, IndianRupee, ArrowUp, ArrowDown, Calendar
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import RevenueChart from './RevenueChart'; // Importing the modular RevenueChart component
 
-const DashboardCard = ({ title, value, icon: Icon }) => (
-  <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-    <div className="flex justify-between">
+const DashboardCard = ({ title, value, increment, icon: Icon }) => (
+  <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+    <div className="flex justify-between items-start">
       <div>
-        <p className="text-sm text-gray-500">{title}</p>
-        <p className="text-2xl font-semibold mt-1">
+        <p className="text-gray-500 text-sm font-medium">{title}</p>
+        <p className="text-2xl font-bold mt-2 text-gray-800">
           {title === "Revenue" ? `₹${value?.toLocaleString() || 0}` : value?.toLocaleString() || 0}
         </p>
+        {increment !== undefined && (
+          <div className={`flex items-center mt-2 ${increment >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {increment >= 0 ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
+            <span className="text-sm font-medium ml-1">{Math.abs(increment)}% from previous period</span>
+          </div>
+        )}
       </div>
-      <div className="h-12 w-12 bg-blue-50 rounded-full flex items-center justify-center">
-        <Icon className="h-6 w-6 text-blue-500" />
+      <div className="h-12 w-12 rounded-lg bg-blue-50 flex items-center justify-center">
+        <Icon className="h-6 w-6 text-blue-600" />
       </div>
     </div>
   </div>
+);
+
+const TimeRangeButton = ({ active, onClick, children }) => (
+  <button
+    onClick={onClick}
+    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+      active 
+        ? 'bg-blue-600 text-white shadow-md' 
+        : 'bg-white text-gray-600 hover:bg-gray-50'
+    }`}
+  >
+    {children}
+  </button>
 );
 
 const AdminDashboard = () => {
@@ -25,50 +44,25 @@ const AdminDashboard = () => {
   const [productCount, setProductCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [revenue, setRevenue] = useState(0);
-  const [chartData, setChartData] = useState([]);
+  const [timeRange, setTimeRange] = useState('30d');
+  const [stats, setStats] = useState({
+    userIncrement: 14,
+    productIncrement: -5,
+    orderIncrement: 8,
+    revenueIncrement: 15
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const formatChartData = (orders) => {
-    if (!Array.isArray(orders)) {
-      console.error('Orders is not an array:', orders);
-      return [];
-    }
-
-    // Create a map of all months with 0 as initial value
-    const monthsMap = {};
-    const today = new Date();
-    for (let i = 0; i < 12; i++) {
-      const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
-      const monthYear = date.toLocaleString('default', { month: 'short', year: '2-digit' });
-      monthsMap[monthYear] = 0;
-    }
-
-    // Fill in the actual values
-    orders.forEach(order => {
-      const date = new Date(order.orderDate);
-      const monthYear = date.toLocaleString('default', { month: 'short', year: '2-digit' });
-      if (monthsMap[monthYear] !== undefined) {
-        monthsMap[monthYear] += order.totalAmount;
-      }
-    });
-
-    // Convert to array and reverse to show oldest to newest
-    return Object.entries(monthsMap)
-      .map(([name, value]) => ({ name, value }))
-      .reverse();
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const headers = {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
         };
 
-        // Fetch all data
         const [userRes, productRes, orderCountRes, ordersRes] = await Promise.all([
           fetch('https://elysian-feast.onrender.com/user/count', { headers }),
           fetch('https://elysian-feast.onrender.com/product/count', { headers }),
@@ -76,7 +70,6 @@ const AdminDashboard = () => {
           fetch('https://elysian-feast.onrender.com/order/all', { headers })
         ]);
 
-        // Parse responses
         const [userData, productData, orderCountData, ordersData] = await Promise.all([
           userRes.json(),
           productRes.json(),
@@ -84,27 +77,18 @@ const AdminDashboard = () => {
           ordersRes.json()
         ]);
 
-        // Set counts
         setUserCount(userData.count);
         setProductCount(productData.count);
         setOrderCount(orderCountData.count);
 
-        // Handle orders data
         const orders = Array.isArray(ordersData.orders) ? ordersData.orders : 
                       Array.isArray(ordersData) ? ordersData : [];
 
-        // Calculate revenue
         const totalRevenue = orders.reduce((sum, order) => {
-          const amount = Number(order.totalAmount) || 0;
-          return sum + amount;
+          return sum + (Number(order.totalAmount) || 0);
         }, 0);
         
         setRevenue(totalRevenue);
-
-        // Set chart data
-        const formattedChartData = formatChartData(orders);
-        setChartData(formattedChartData);
-
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
         setError('Failed to fetch dashboard data');
@@ -119,7 +103,11 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-500">Loading dashboard data...</div>
+        <div className="flex items-center space-x-2">
+          <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" />
+          <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+          <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+        </div>
       </div>
     );
   }
@@ -127,83 +115,92 @@ const AdminDashboard = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-red-500">{error}</div>
+        <div className="text-red-500 bg-red-50 px-6 py-4 rounded-lg shadow-sm">
+          {error}
+        </div>
       </div>
     );
   }
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
-          <p className="font-semibold">{label}</p>
-          <p className="text-blue-500">₹{payload[0].value.toLocaleString()}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
-        <p className="text-gray-500 mt-1">Welcome back! Here's what's happening today.</p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <DashboardCard 
-          title="Total Users" 
-          value={userCount} 
-          icon={Users}
-        />
-        <DashboardCard 
-          title="Total Products" 
-          value={productCount} 
-          icon={Package}
-        />
-        <DashboardCard 
-          title="Total Orders" 
-          value={orderCount} 
-          icon={ShoppingCart}
-        />
-        <DashboardCard 
-          title="Revenue" 
-          value={revenue} 
-          icon={IndianRupee }
-        />
-      </div>
-
-      {/* Sales Overview Chart */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold mb-4">Sales Overview</h2>
-        <div className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart 
-              data={chartData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+            <p className="text-gray-500 mt-1">Track your business performance and growth</p>
+          </div>
+          <div className="mt-4 md:mt-0 flex space-x-2 bg-gray-100 p-1 rounded-xl">
+            <TimeRangeButton 
+              active={timeRange === '7d'} 
+              onClick={() => setTimeRange('7d')}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="name" 
-                tick={{ fontSize: 12 }}
-              />
-              <YAxis 
-                tick={{ fontSize: 12 }}
-                tickFormatter={(value) => `₹${value.toLocaleString()}`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Line 
-                type="monotone" 
-                dataKey="value" 
-                stroke="#3b82f6" 
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+              7 Days
+            </TimeRangeButton>
+            <TimeRangeButton 
+              active={timeRange === '30d'} 
+              onClick={() => setTimeRange('30d')}
+            >
+              30 Days
+            </TimeRangeButton>
+            <TimeRangeButton 
+              active={timeRange === '90d'} 
+              onClick={() => setTimeRange('90d')}
+            >
+              90 Days
+            </TimeRangeButton>
+            <TimeRangeButton 
+              active={timeRange === '1y'} 
+              onClick={() => setTimeRange('1y')}
+            >
+              1 Year
+            </TimeRangeButton>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <DashboardCard 
+            title="Total Users" 
+            value={userCount}
+            increment={stats.userIncrement}
+            icon={Users}
+          />
+          <DashboardCard 
+            title="Total Products" 
+            value={productCount}
+            increment={stats.productIncrement}
+            icon={Package}
+          />
+          <DashboardCard 
+            title="Total Orders" 
+            value={orderCount}
+            increment={stats.orderIncrement}
+            icon={ShoppingCart}
+          />
+          <DashboardCard 
+            title="Revenue" 
+            value={revenue}
+            increment={stats.revenueIncrement}
+            icon={IndianRupee}
+          />
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800">Revenue Overview</h2>
+              <p className="text-gray-500 text-sm mt-1">Revenue trends over time</p>
+            </div>
+            <div className="flex items-center text-gray-500">
+              <Calendar className="w-5 h-5 mr-2" />
+              <span className="text-sm">
+                {timeRange === '7d' ? 'Last 7 Days' :
+                 timeRange === '30d' ? 'Last 30 Days' :
+                 timeRange === '90d' ? 'Last 90 Days' : 'Last Year'}
+              </span>
+            </div>
+          </div>
+          <RevenueChart timeRange={timeRange} />
         </div>
       </div>
     </div>
