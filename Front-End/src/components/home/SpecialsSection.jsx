@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 const SpecialSection = () => {
   return (
@@ -48,9 +50,9 @@ const SpecialSection = () => {
               className="w-40 lg:w-64 rounded-lg shadow-lg object-cover transition-transform duration-300 ease-in-out"
             />
           </div>
-          <button className="mt-5 px-4 py-2 bg-[#D16A48] text-white rounded-md text-sm lg:text-lg hover:bg-[#7C6145]">
+          <Link to="/category" className="mt-5 px-4 py-2 bg-[#D16A48] text-white rounded-md text-sm lg:text-lg hover:bg-[#7C6145]">
             View More
-          </button>
+          </Link>
         </div>
 
         {/* Right Menu Section */}

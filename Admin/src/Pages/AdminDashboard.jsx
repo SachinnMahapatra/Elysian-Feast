@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Users, Package, ShoppingCart, DollarSign
+  Users, Package, ShoppingCart, IndianRupee 
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
@@ -10,7 +10,7 @@ const DashboardCard = ({ title, value, icon: Icon }) => (
       <div>
         <p className="text-sm text-gray-500">{title}</p>
         <p className="text-2xl font-semibold mt-1">
-          {title === "Revenue" ? `$${value?.toLocaleString() || 0}` : value?.toLocaleString() || 0}
+          {title === "Revenue" ? `₹${value?.toLocaleString() || 0}` : value?.toLocaleString() || 0}
         </p>
       </div>
       <div className="h-12 w-12 bg-blue-50 rounded-full flex items-center justify-center">
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
       return (
         <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
           <p className="font-semibold">{label}</p>
-          <p className="text-blue-500">${payload[0].value.toLocaleString()}</p>
+          <p className="text-blue-500">₹{payload[0].value.toLocaleString()}</p>
         </div>
       );
     }
@@ -171,7 +171,7 @@ const AdminDashboard = () => {
         <DashboardCard 
           title="Revenue" 
           value={revenue} 
-          icon={DollarSign}
+          icon={IndianRupee }
         />
       </div>
 
@@ -191,7 +191,7 @@ const AdminDashboard = () => {
               />
               <YAxis 
                 tick={{ fontSize: 12 }}
-                tickFormatter={(value) => `$${value.toLocaleString()}`}
+                tickFormatter={(value) => `₹${value.toLocaleString()}`}
               />
               <Tooltip content={<CustomTooltip />} />
               <Line 

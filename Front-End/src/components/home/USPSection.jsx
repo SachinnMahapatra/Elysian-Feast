@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function USPSection() {
   return (
@@ -10,7 +11,7 @@ function USPSection() {
           <p className="mb-4">
             Elysian Feast is dedicated to the art of gourmet dining, where each dish is meticulously crafted for connoisseurs. Our passion for excellence shines through in every flavor, made with the finest ingredients.
           </p>
-          <button
+          <Link to="about"
             className="px-6 py-3 text-[#7C6145] rounded-[49px] bg-[#e0e0e0] 
             shadow-[5px_5px_22px_#8b8b8b,-5px_-5px_22px_#ffffff] 
             hover:shadow-[7px_7px_28px_#8b8b8b,-7px_-7px_28px_#ffffff] 
@@ -21,7 +22,7 @@ function USPSection() {
             transition-all duration-300 ease-in-out"
           >
             Know More
-          </button>
+          </Link>
         </div>
 
         {/* Knife Image */}
@@ -35,8 +36,8 @@ function USPSection() {
           <p className="mb-4">
             Each dish is thoughtfully curated to deliver bold flavors and refined textures, offering a gourmet experience that delights the senses. Every plate is a celebration of taste and artistry.
           </p>
-          <button
-            className="px-6 mt-7 py-3 text-[#7C6145] rounded-[49px] bg-[#e0e0e0] 
+          <Link to="category"
+            className=" px-6 mt-7 py-3 text-[#7C6145] rounded-[49px] bg-[#e0e0e0] 
             shadow-[5px_5px_22px_#8b8b8b,-5px_-5px_22px_#ffffff] 
             hover:shadow-[7px_7px_28px_#8b8b8b,-7px_-7px_28px_#ffffff] 
             hover:bg-[#f0f0f0] 
@@ -46,7 +47,7 @@ function USPSection() {
             transition-all duration-300 ease-in-out"
           >
             Know More
-          </button>
+          </Link>
         </div>
       </div>
     </section>
