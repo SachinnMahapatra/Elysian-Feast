@@ -1,18 +1,19 @@
-
 import { Route, Routes } from "react-router-dom";
 import AdminPanel from "./Pages/AdminPanel";
 import Dashboard from "./Pages/Dashboard";
 import UserTable from "./Components/UserTable";
 import AdminLogin from "./Pages/AdminLogin";
 import { Toaster } from "react-hot-toast";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./Private/PrivateRoute";
 import OrdersPage from "./Components/OrdersPage";
 import AdminDashboard from "./Pages/AdminDashboard";
+import UserDetailPage from "./Pages/UserDetailPage";
 
 export default function App() {
-  return <>
-   <Routes>
+  return (
+    <>
+      <Routes>
         {/* Public routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
@@ -25,7 +26,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
-       
+
         <Route
           path="/"
           element={
@@ -58,9 +59,16 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/dashboard/user/:id"
+          element={
+            <PrivateRoute>
+              <UserDetailPage/>
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Toaster />
-
-  </>
-  
+    </>
+  );
 }

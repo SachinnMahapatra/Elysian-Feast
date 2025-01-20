@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const VerifyEmail = () => {
@@ -37,6 +37,7 @@ const VerifyEmail = () => {
       {verificationStatus === "success" && (
         <div className="bg-green-500 p-4 rounded-md shadow-md text-center">
           <p>Your email has been successfully verified!</p>
+          <Link to= "/login">Log In</Link>
         </div>
       )}
       {verificationStatus === "error" && (

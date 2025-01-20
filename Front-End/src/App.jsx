@@ -15,6 +15,9 @@ import Checkout from "./components/Checkout";
 import ProductDetails from "./components/ProductDetails";
 import Category from "./components/category/Category";
 import OrderConfirmation from "./components/OrderConfirmation";
+import ContactAkash from "./components/ContactAkash";
+import Profile from "./components/akshita/Profile";
+import Service from "./components/Service";
 
 export default function App() {
   return (
@@ -24,7 +27,7 @@ export default function App() {
       <Route path="/login" element={<Login />}/>
       <Route path="/request-reset" element={<RequestResetPassword />}/>
     <Route path="/Register" element={<Signup />}/>
-    <Route path="/Contact" element={<Contact />}/>
+    <Route path="/Contact" element={<ContactAkash />}/>
     <Route path="/reset-password" element={<ResetPasswordPage />} />
     <Route path="/about" element={<About />} />
     <Route path="/table-booking" element={<TableBooking />} />
@@ -33,6 +36,8 @@ export default function App() {
     <Route path="/product/:productId" element={<ProductDetails />} />
     <Route path="/category" element={<Category />} />
     <Route path="/Order-Confirmation" element={<OrderConfirmation />} />
+    <Route path="/profile" element={<Profile />} />
+    <Route path="/services" element={<Service />}/>
 
     {/* <Route path="/products" element={<Monsoon />}/> */}
     </Routes>

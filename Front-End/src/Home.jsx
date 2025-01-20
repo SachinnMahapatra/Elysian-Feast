@@ -8,6 +8,7 @@ import TestimonialsSection from './components/home/TestimonialSection';
 import GallerySection from './components/home/GallerySection';
 import NewsletterSection from './components/home/NewsletterSection';
 import Footer from './components/home/Footer';
+import FAQ from './components/FAQ';
 
 
 
@@ -25,7 +26,8 @@ function HomePage() {
       <TestimonialsSection />
       <GallerySection />
 
-      <NewsletterSection />
+      {/* <NewsletterSection /> */}
+      {/* <FAQ /> */}
      
       <Footer />
     </div>

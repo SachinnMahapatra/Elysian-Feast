@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function HeroSection() {
   return (
@@ -9,9 +9,14 @@ function HeroSection() {
           Crafted For Connoisseurs
         </h2>
         <p className="text-lg md:text-xl mb-8 text-[#5A6E48]">
-          Welcome to Elysian Feast, where every dish is an ode to culinary artistry. Crafted for connoisseurs, our menu showcases a symphony of flavors, curated with the finest ingredients and meticulous passion. Join us in indulging your senses in a dining experience beyond compare.
+          Welcome to Elysian Feast, where every dish is an ode to culinary
+          artistry. Crafted for connoisseurs, our menu showcases a symphony of
+          flavors, curated with the finest ingredients and meticulous passion.
+          Join us in indulging your senses in a dining experience beyond
+          compare.
         </p>
-        <Link to="/category"
+        <Link
+          to="/category"
           className="px-6 py-3 text-black font-semibold rounded-[49px] bg-[#e0e0e0] 
           shadow-[5px_5px_22px_#8b8b8b,-5px_-5px_22px_#ffffff] 
           hover:shadow-[7px_7px_28px_#8b8b8b,-7px_-7px_28px_#ffffff] 

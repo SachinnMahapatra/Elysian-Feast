@@ -2,10 +2,10 @@ import React from 'react';
 
 function TestimonialsSection() {
   const testimonials = [
-    { name: 'John Doe', feedback: 'Amazing food and great service!' },
-    { name: 'Jane Smith', feedback: 'The atmosphere was incredible.' },
-    { name: 'Alice Johnson', feedback: 'Best dining experience I have ever had!' },
-    { name: 'Michael Lee', feedback: 'Highly recommended for food lovers.' },
+    { name: 'Manas', feedback: 'Amazing food and great service!' },
+    { name: 'Riya', feedback: 'The atmosphere was incredible.' },
+    { name: 'Souvik', feedback: 'Best dining experience I have ever had!' },
+    { name: 'Rajesh', feedback: 'Highly recommended for food lovers.' },
   ];
 
   return (
