@@ -40,7 +40,7 @@ const Category = () => {
   return (
     <>
     <Header/>
-    <div className="min-h-screen bg-yellow-200">
+    <div className="min-h-screen bg-yellow-50">
       <Head />
       <main className="container mx-auto px-4 py-8">
         <ProductList products={products} />
