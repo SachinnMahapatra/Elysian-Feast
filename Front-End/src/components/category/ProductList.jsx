@@ -32,22 +32,22 @@ const ProductList = ({ products }) => {
           All
         </button>
         <button
-          onClick={() => setSelectedCategory('necklace')}
+          onClick={() => setSelectedCategory('Vegetarian')}
           className="px-3 py-2 bg-gray-50 rounded hover:bg-gray-300 text-green-700"
         >
-          Necklace
+          Vegetarian
         </button>
         <button
-          onClick={() => setSelectedCategory('earings')}
+          onClick={() => setSelectedCategory('Non-Vegetarain')}
           className="px-3 py-2 bg-gray-50 rounded hover:bg-gray-300 text-green-700"
         >
-          Earrings
+          Non-Vegetarain
         </button>
         <button
-          onClick={() => setSelectedCategory('bracelets')}
+          onClick={() => setSelectedCategory('Vegan')}
           className="px-3 py-2 bg-gray-50 rounded hover:bg-gray-300 text-green-700"
         >
-          Bracelets
+          Vegan
         </button>
       </div>
 
