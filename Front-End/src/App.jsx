@@ -27,7 +27,7 @@ export default function App() {
       <Route path="/login" element={<Login />}/>
       <Route path="/request-reset" element={<RequestResetPassword />}/>
     <Route path="/Register" element={<Signup />}/>
-    <Route path="/Contact" element={<ContactAkash />}/>
+    <Route path="/Contact" element={<Contact />}/>
     <Route path="/reset-password" element={<ResetPasswordPage />} />
     <Route path="/about" element={<About />} />
     <Route path="/table-booking" element={<TableBooking />} />
